@@ -10,7 +10,7 @@ A_Z_SPACE = [Key.SPACE, Key.A, Key.Z]
 
 class Devices:
     @staticmethod
-    def is_keyboard(device):
+    def is_keyboard(device, device_names=[]):
         """Guess the device is a keyboard or not"""
         capabilities = device.capabilities(verbose=False)
         if 1 not in capabilities:
@@ -19,6 +19,8 @@ class Devices:
 
         qwerty = all(k in supported_keys for k in QWERTY)
         az = all(k in supported_keys for k in A_Z_SPACE)
+        if device.name in device_names:
+            return True
         if qwerty and az:
             return True
         # Otherwise, its not a keyboard!
@@ -122,7 +124,8 @@ class DeviceRegistry:
 
 
 class DeviceFilter:
-    def __init__(self, matches):
+    def __init__(self, matches, device_names):
+        self.device_names = device_names
         self.matches = matches
         if not matches:
             info("Autodetecting all keyboards (--device not specified)")
@@ -152,4 +155,7 @@ class DeviceFilter:
             return False
 
         # Exclude none keyboard devices
-        return Devices.is_keyboard(device)
+        return Devices.is_keyboard(
+            device=device,
+            device_names=self.device_names
+        )

@@ -15,6 +15,7 @@ from .models.key import Key, ASCII_TO_KEY
 from .models.keymap import Keymap
 from .models.modifier import Modifier
 from .models.modmap import Modmap, MultiModmap
+from .transform import reset_transform
 
 # GLOBALS
 bind = ComboHint.BIND
@@ -48,6 +49,11 @@ THROTTLE_DELAY_DEFAULTS = {
 }
 _THROTTLES = THROTTLE_DELAY_DEFAULTS
 
+ADDED_DEVICES = []
+
+def add_devices(device_names: list[str]):
+    global ADDED_DEVICES
+    ADDED_DEVICES = device_names
 
 def clamp(num, min_value, max_value):
     return max(min(num, max_value), min_value)
