@@ -15,7 +15,6 @@ from .models.key import Key, ASCII_TO_KEY
 from .models.keymap import Keymap
 from .models.modifier import Modifier
 from .models.modmap import Modmap, MultiModmap
-from .transform import reset_transform
 
 # GLOBALS
 bind = ComboHint.BIND
