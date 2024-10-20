@@ -37,6 +37,9 @@ class Devices:
         device_lines = [
             device_format.format(n, d) for n, d in enumerate(devices)
         ]
+        if not devices:
+            print("No devices found to list")
+            return None
         header_len = max([20 + 35 + 3 + len(x.phys) for x in devices])
         print("-" * header_len)
         print("{:<20} {:<35} {}".format("Device", "Name", "Phys"))
