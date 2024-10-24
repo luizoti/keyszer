@@ -62,9 +62,11 @@ def main_loop(arg_devices, device_watch):
     try:
         loop = asyncio.get_event_loop()
         registry = DeviceRegistry(
-            loop, input_cb=receive_input, filterer=DeviceFilter(arg_devices, device_names=config_api.ADDED_DEVICES)
+            loop,
+            input_cb=receive_input,
+            filterer=DeviceFilter(arg_devices, device_names=config_api.ADDED_DEVICES),
         )
-        registry.autodetect()
+        registry.autodetect(watch=device_watch)
 
         if device_watch:
             loop.add_reader(inotify.fd, _inotify_handler, registry, inotify)

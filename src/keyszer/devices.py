@@ -72,10 +72,9 @@ class DeviceRegistry:
     def cares_about(self, device):
         return self._filter.filter(device)
 
-    def autodetect(self):
+    def autodetect(self, watch):
         devices = list(filter(self._filter.filter, Devices.all()))
-
-        if not devices:
+        if not devices and not watch:
             error(
                 "no input devices matched "
                 "(do you have rw permission on /dev/input/*?)"
